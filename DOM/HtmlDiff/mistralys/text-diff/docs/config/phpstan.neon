@@ -1,0 +1,7 @@
+parameters:
+    tmpDir: ./
+    excludePaths:
+        - vendor/*
+    paths:
+        - ../../src
+        - ../../tests
