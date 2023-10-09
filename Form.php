@@ -51,6 +51,18 @@ class Form {
         $output = '<input type="text" '.self::arrayToAttribute($attributes).'/>';
         return $output;
     }
+    
+    /**
+     * number
+     * This method returns a input text element.
+     * @param   array(id, name, class, onclick, value, length, width, disable, readonly, required, data-required, placeholder, autocomplete, data-format, tabindex)
+     * @return  string
+     */
+    
+    public static function number($attributes = array()) {
+        $output = '<input type="number" '.self::arrayToAttribute($attributes).'/>';
+        return $output;
+    }
 
     /**
      * password
