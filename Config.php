@@ -12,12 +12,14 @@
 class Config extends Controller {
     
     private static $cacheTime = 144000000;
+    private static $configArr = array();
+    private static $allConfigCodeArr = array();
 
     public function __construct() {
          parent::__construct();
     }
     
-    public function get($code = null, $criteria = null, $likecriteria = null) 
+    public static function get($code = null, $criteria = null, $likecriteria = null) 
     {    
         global $db;
         
@@ -67,7 +69,7 @@ class Config extends Controller {
     public static function getFromCache($code = null, $criteria = null) {     
         
         $lowerCode = strtolower($code);
-        $confData = Config::setCache();    
+        $confData = Config::setCache();     
 
         if (isset($confData[$lowerCode])) {
             
@@ -115,7 +117,7 @@ class Config extends Controller {
         return null;
     }
     
-    public function getFromCacheDefault($code = null, $criteria = null, $default = null) {
+    public static function getFromCacheDefault($code = null, $criteria = null, $default = null) {
         
         $lowerCode = strtolower($code);
         $confData  = Config::setCache();
@@ -132,7 +134,7 @@ class Config extends Controller {
         return $default;
     }
     
-    public function isCode($code = null) {
+    public static function isCode($code = null) {
         
         $lowerCode = strtolower($code);
         $confData  = Config::setCodeCache();
@@ -144,20 +146,18 @@ class Config extends Controller {
         return false;
     }
     
-    public function setCache() {
+    public static function setCache() {
+        
+        if (self::$configArr) {
+            return self::$configArr;
+        }
         
         $cache = phpFastCache();
-
         $conf = $cache->get('sysConfig');
         
         if ($conf == null) {
             
             global $db;
-            
-            $where = '';
-            if ($sessionCompanyDepartmentId = issetParam($sessionValues['sessioncompanydepartmentid'])) {
-                $where .= " AND (CV.COMPANY_DEPARTMENT_ID = $sessionCompanyDepartmentId OR CV.COMPANY_DEPARTMENT_ID IS NULL)"; 
-            }            
             
             $data = $db->GetAll("
                 SELECT 
@@ -166,7 +166,7 @@ class Config extends Controller {
                     LOWER(CV.CRITERIA) AS CRITERIA 
                 FROM CONFIG CF 
                     INNER JOIN CONFIG_VALUE CV ON CV.CONFIG_ID = CF.ID 
-                WHERE CF.CODE IS NOT NULL$where 
+                WHERE CF.CODE IS NOT NULL 
                 GROUP BY 
                     CF.CODE, CV.CONFIG_VALUE, CV.CRITERIA 
                 ORDER BY 
@@ -197,13 +197,18 @@ class Config extends Controller {
             $cache->set('sysConfig', $conf, self::$cacheTime);
         }
         
-        return $conf;
+        self::$configArr = $conf;
+        
+        return self::$configArr;
     }
     
-    public function setCodeCache() {
+    public static function setCodeCache() {
+        
+        if (self::$allConfigCodeArr) {
+            return self::$allConfigCodeArr;
+        }
         
         $cache = phpFastCache();
-
         $conf = $cache->get('sysConfigAllCode');
         
         if ($conf == null) {
@@ -211,7 +216,6 @@ class Config extends Controller {
             global $db;
             
             $data = $db->GetAll("SELECT LOWER(CODE) AS CODE FROM CONFIG WHERE CODE IS NOT NULL GROUP BY CODE");
-            
             $conf = array();
             
             if ($data) {
@@ -223,10 +227,12 @@ class Config extends Controller {
             $cache->set('sysConfigAllCode', $conf, self::$cacheTime);
         }
         
-        return $conf;
+        self::$allConfigCodeArr = $conf;
+        
+        return self::$allConfigCodeArr;
     }
     
-    public function isCreatedMetaDataById($id) {
+    public static function isCreatedMetaDataById($id) {
         
         try {
             global $db;

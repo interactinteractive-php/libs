@@ -168,7 +168,7 @@ class Input {
     
     public static function fileData()
     {
-        return $_FILES;
+        return isset($_FILES) ? $_FILES : null;
     }
     
     public static function getData()

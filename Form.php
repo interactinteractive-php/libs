@@ -463,9 +463,9 @@ class Form {
                         }
                     }
 
-                    if (isset($params['value']) && isset($arr)) {
-                        $selected = (in_array($v[$params['op_value']], $arr)) ? ' selected="selected"'.$lid : '';
-                        $op_text = $ltext;
+                    if (isset($params['value']) && isset($arr) && in_array($v[$params['op_value']], $arr)) {
+                        $selected = ' selected="selected"'.$lid;
+                        $op_text .= $ltext . ', ';
                     } else {
                         $selected = null;
                     }
@@ -477,7 +477,7 @@ class Form {
         $o .= '</select>';
         
         if ($isReturnArray) {
-            return array('control' => $o, 'op_text' => $op_text);
+            return array('control' => $o, 'op_text' => substr(trim($op_text), 0, -1));
         }
         
         return $o;
