@@ -37,7 +37,7 @@ class Lang extends Controller {
      * @param 	string	alternative path to look for language file
      * @return	mixed
      */
-    public function load($langFile = '', $return = false, $languageCode = null)
+    public static function load($langFile = '', $return = false, $languageCode = null)
     {   
         $langCode = is_null($languageCode) ? Lang::getCode() : $languageCode;
         
@@ -93,19 +93,19 @@ class Lang extends Controller {
      * @param	string $line the language line
      * @return	string
      */
-    public function line($code = '') 
+    public static function line($code = '') 
     {
         $codeLower = Str::lower($code);
         return !isset(self::$language[$codeLower]) ? $code : self::$language[$codeLower];
     }
 
-    public function lineEmpty($code = '')
+    public static function lineEmpty($code = '')
     {
         $codeLower = Str::lower($code);
         return !isset(self::$language[$codeLower]) ? '' : self::$language[$codeLower];
     }    
     
-    public function isExisting($code = '') 
+    public static function isExisting($code = '') 
     {   
         if (empty($code)) {
             return false;
@@ -114,7 +114,7 @@ class Lang extends Controller {
         return !isset(self::$language[$code]) ? false : true;
     }
     
-    public function lineCode($code = '', $languageCode = null) {
+    public static function lineCode($code = '', $languageCode = null) {
         $codeLower = Str::lower($code);
         
         if (!is_null($languageCode)) {
@@ -130,7 +130,7 @@ class Lang extends Controller {
         return $globeText;
     }
     
-    public function lineVar($code = '', $variables = array(), $default = null) 
+    public static function lineVar($code = '', $variables = array(), $default = null) 
     {
         $codeLower = Str::lower($code);
         
@@ -149,7 +149,7 @@ class Lang extends Controller {
         }
     }
     
-    public function lineDefault($code, $default = null)
+    public static function lineDefault($code, $default = null)
     {
         if (self::isExisting($code)) {
             return self::line($code);
@@ -158,7 +158,7 @@ class Lang extends Controller {
         return $default;
     }
     
-    public function eitherOne($first, $second, $default = null)
+    public static function eitherOne($first, $second, $default = null)
     {
         if (self::isExisting($first)) {
             return self::line($first);
@@ -171,7 +171,7 @@ class Lang extends Controller {
         return $default;
     }
 
-    public function getCode() 
+    public static function getCode() 
     {
         if (self::$isMultiLangLoad == false) {
             
@@ -193,7 +193,7 @@ class Lang extends Controller {
         return self::$langCode;
     }
     
-    public function getSuffix() 
+    public static function getSuffix() 
     {
         $sdbun = Session::unitName();
         
@@ -204,7 +204,7 @@ class Lang extends Controller {
         return null;
     }
     
-    public function getLanguageName() 
+    public static function getLanguageName() 
     {
         if (Session::isCheck(SESSION_PREFIX.'langcode')) {
             return Session::get(SESSION_PREFIX.'langcode');
@@ -216,7 +216,7 @@ class Lang extends Controller {
         return 'mongolian';
     }
     
-    public function isUseMultiLang() {
+    public static function isUseMultiLang() {
         
         if (self::$isMultiLangLoad == false) {
             
@@ -238,7 +238,7 @@ class Lang extends Controller {
         return self::$isMultiLang;
     }
     
-    public function getDefaultLangCode() {
+    public static function getDefaultLangCode() {
         
         if (self::$isMultiLangLoad == false) {
             
@@ -270,7 +270,7 @@ class Lang extends Controller {
         }
     }
     
-    public function getMinActiveLanguage()
+    public static function getMinActiveLanguage()
     {   
         $html = '';
         
@@ -318,7 +318,7 @@ class Lang extends Controller {
         return $html;
     }
     
-    public function getLanguageList() {
+    public static function getLanguageList() {
 
         if (!self::$langListLoad) {
             
@@ -418,7 +418,7 @@ class Lang extends Controller {
         return self::$langList;
     }
     
-    public function getActiveLanguage()
+    public static function getActiveLanguage()
     {   
         $html = '';
         
@@ -460,7 +460,7 @@ class Lang extends Controller {
         return $html;
     }
     
-    public function changeLanguage($langCode, $previousUrl)
+    public static function changeLanguage($langCode, $previousUrl)
     {
         global $db;
         
@@ -497,7 +497,7 @@ class Lang extends Controller {
         Message::add('s', '', $previousUrl);
     }
     
-    public function changeLanguageWithoutrefresh($langCode) {
+    public static function changeLanguageWithoutrefresh($langCode) {
         global $db;
 
         $row = $db->GetRow("

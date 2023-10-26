@@ -89,7 +89,7 @@ class Uri {
         return $URL;
     }
     
-    public function isUrlAuth() {
+    public static function isUrlAuth() {
 
         if (Session::isCheck(SESSION_PREFIX . 'isUrlAuthenticate')) {
             
@@ -131,7 +131,7 @@ class Uri {
         }
     }
     
-    public function validateUserPassword($username, $password) {
+    public static function validateUserPassword($username, $password) {
         
         $dbConfig = Config::getFromCache('META_LOGIN_USER_PASS');
         

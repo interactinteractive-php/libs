@@ -25,7 +25,7 @@ class FileUpload {
     public static $uploadedFiles = array();
     public static $uploadedRealPathFiles = array();
     
-    public function ValidateExtension()
+    public static function ValidateExtension()
     {
         $FileName = trim(self::$FileName);
         $FileParts = pathinfo($FileName);
@@ -59,7 +59,7 @@ class FileUpload {
         }
     }
 
-    public function ValidateSize()
+    public static function ValidateSize()
     {
         $MaximumFileSize = self::$MaximumFileSize;
         $TempFileName = self::GetTempName();
@@ -79,7 +79,7 @@ class FileUpload {
         return true;
     }
 
-    public function ValidateExistance()
+    public static function ValidateExistance()
     {
         $FileName = self::$FileName;
         $UploadDirectory = self::$UploadDirectory;
@@ -96,7 +96,7 @@ class FileUpload {
         }
     }
 
-    public function ValidateDirectory()
+    public static function ValidateDirectory()
     {
         $UploadDirectory = self::$UploadDirectory;
 
@@ -126,7 +126,7 @@ class FileUpload {
         }
     }
 
-    public function ValidateImage()
+    public static function ValidateImage()
     {
         $MaximumWidth = self::MaximumWidth;
         $MaximumHeight = self::MaximumHeight;
@@ -151,7 +151,7 @@ class FileUpload {
         return true;
     }
 
-    public function UploadFile()
+    public static function UploadFile()
     {
         if (!self::ValidateExtension()) {
             FileUpload::removeUploadedFiles();
@@ -199,72 +199,72 @@ class FileUpload {
         }
     }
     
-    public function SetFileName($argv)
+    public static function SetFileName($argv)
     {
         self::$FileName = $argv;
     }
 
-    public function SetUploadDirectory($argv)
+    public static function SetUploadDirectory($argv)
     {
         self::$UploadDirectory = $argv;
     }
 
-    public function SetTempName($argv)
+    public static function SetTempName($argv)
     {
         self::$TempFileName = $argv;
     }
 
-    public function SetValidExtensions($argv)
+    public static function SetValidExtensions($argv)
     {
         self::$ValidExtensions = $argv;
     }
 
-    public function SetMessage($argv)
+    public static function SetMessage($argv)
     {
         self::$Message = $argv;
     }
 
-    public function SetMaximumFileSize($argv)
+    public static function SetMaximumFileSize($argv)
     {
         self::$MaximumFileSize = $argv;
     }
    
-    public function SetIsImage($argv)
+    public static function SetIsImage($argv)
     {
         self::$IsImage = $argv;
     }
 
-    public function SetMaximumWidth($argv)
+    public static function SetMaximumWidth($argv)
     {
         self::$MaximumWidth = $argv;
     }
 
-    public function SetMaximumHeight($argv)
+    public static function SetMaximumHeight($argv)
     {
         self::$MaximumHeight = $argv;
     }  
     
-    public function GetFileName()
+    public static function GetFileName()
     {
         return self::$FileName;
     }
 
-    public function GetUploadDirectory()
+    public static function GetUploadDirectory()
     {
         return self::$UploadDirectory;
     }
 
-    public function GetTempName()
+    public static function GetTempName()
     {
         return self::$TempFileName;
     }
 
-    public function GetValidExtensions()
+    public static function GetValidExtensions()
     {
         return self::$ValidExtensions;
     }
 
-    public function GetMessage()
+    public static function GetMessage()
     {
         if (!isset(self::$Message)) {
             self::SetMessage("No Message");
@@ -273,22 +273,22 @@ class FileUpload {
         return self::$Message;
     }
 
-    public function GetMaximumFileSize()
+    public static function GetMaximumFileSize()
     {
         return self::$MaximumFileSize;
     }
 
-    public function GetIsImage()
+    public static function GetIsImage()
     {
         return self::$IsImage;
     }
 
-    public function GetMaximumWidth()
+    public static function GetMaximumWidth()
     {
         return self::$MaximumWidth;
     }
 
-    public function GetMaximumHeight()
+    public static function GetMaximumHeight()
     {
         return self::$MaximumHeight;
     }
@@ -298,7 +298,7 @@ class FileUpload {
         return Config::getFromCacheDefault('CONFIG_FILE_MAX_SIZE', null, 10485760);
     }
     
-    public function checkContentType($fileName, $tmpName) {
+    public static function checkContentType($fileName, $tmpName) {
         
         if (!FileUpload::$mimes) {
             require_once (BASEPATH . 'helper/mimes.php');
@@ -347,7 +347,7 @@ class FileUpload {
         }
     }
     
-    public function removeUploadedFiles() {
+    public static function removeUploadedFiles() {
         
         if (FileUpload::$uploadedRealPathFiles) {
             foreach (FileUpload::$uploadedRealPathFiles as $k => $file) {

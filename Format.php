@@ -55,7 +55,7 @@ class Format {
 
     // FORMATING OUTPUT ---------------------------------------------------------
 
-    public function to_array($data = null)
+    public static function to_array($data = null)
     {
         // If not just null, but nothing is provided
         if ($data === null and ! func_num_args()) {
@@ -77,7 +77,7 @@ class Format {
     }
 
     // Format XML for output
-    public function to_xml($data = null, $structure = null, $basenode = 'xml')
+    public static function to_xml($data = null, $structure = null, $basenode = 'xml')
     {
         if ($data === null and ! func_num_args()) {
             $data = $this->_data;
@@ -143,7 +143,7 @@ class Format {
     }
 
     // Format HTML for output
-    public function to_html()
+    public static function to_html()
     {
         $data = (array)$this->_data;
 
@@ -174,7 +174,7 @@ class Format {
     }
 
     // Format CSV for output
-    public function to_csv()
+    public static function to_csv()
     {
         $data = (array)$this->_data;
 
@@ -207,7 +207,7 @@ class Format {
     }
 
     // Encode as JSON
-    public function to_json()
+    public static function to_json()
     {
         $callback = isset($_GET['callback']) ? $_GET['callback'] : '';
         if ($callback === '')
@@ -244,26 +244,26 @@ class Format {
     }
 
     // Encode as Serialized array
-    public function to_serialized()
+    public static function to_serialized()
     {
         return serialize($this->_data);
     }
 
     // Output as a string representing the PHP structure
-    public function to_php()
+    public static function to_php()
     {
         return var_export($this->_data, TRUE);
     }
 
     // Format XML for output
-    protected function _from_xml($string)
+    protected static function _from_xml($string)
     {
         return $string ? (array) simplexml_load_string($string, 'SimpleXMLElement', LIBXML_NOCDATA) : array();
     }
 
     // Format CSV for output
     // This function is DODGY! Not perfect CSV support but works with my REST_Controller
-    protected function _from_csv($string)
+    protected static function _from_csv($string)
     {
         $data = array();
 
@@ -285,18 +285,18 @@ class Format {
     }
 
     // Encode as JSON
-    private function _from_json($string)
+    private static function _from_json($string)
     {
         return json_decode(trim($string));
     }
 
     // Encode as Serialized array
-    private function _from_serialize($string)
+    private static function _from_serialize($string)
     {
         return unserialize(trim($string));
     }
 
-    public function valueFormatting($value, $inputType) {
+    public static function valueFormatting($value, $inputType) {
         switch (strtolower($inputType)) {
             case 'bigdecimal':
             case 'decimal':

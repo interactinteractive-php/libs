@@ -17,14 +17,14 @@ class Crypt {
     
     private static $skey = "$2#1";
  
-    public function safe_b64encode($string) 
+    public static function safe_b64encode($string) 
     {
         $data = base64_encode($string);
         $data = str_replace(array('+','/','='),array('-','_',''),$data);
         return $data;
     }
  
-    public function safe_b64decode($string) 
+    public static function safe_b64decode($string) 
     {
         $data = str_replace(array('-','_'),array('+','/'),$string);
         $mod4 = strlen($data) % 4;

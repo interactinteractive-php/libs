@@ -15,12 +15,8 @@ use Knp\Snappy\Pdf as SnappyPdf;
 
 class Pdf {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     // <editor-fold defaultstate="collapsed" desc="Knp snappy https://github.com/KnpLabs/snappy">
-    public function createSnappyPdf($orientation = 'Portrait', $pageSize = 'A4', $title = 'Veritech ERP') {
+    public static function createSnappyPdf($orientation = 'Portrait', $pageSize = 'A4', $title = 'Veritech ERP') {
 
         set_time_limit(0);
         ini_set('memory_limit', '-1');
@@ -170,7 +166,7 @@ class Pdf {
         return $pdf;
     }
 
-    public function setSnappyOutput(SnappyPdf $pdf, $htmlContent, $fileName, $urlReplace = true) {
+    public static function setSnappyOutput(SnappyPdf $pdf, $htmlContent, $fileName, $urlReplace = true) {
         header('Content-Disposition: attachment; filename="' . (!is_null($fileName) ? $fileName : 'veritechErp') . '.pdf"');
         self::setCommonHeader();
         $replacedHtml = $urlReplace ? self::getReplacedHtml($htmlContent) : $htmlContent;
@@ -178,12 +174,12 @@ class Pdf {
         echo $pdf->getOutputFromHtml($replacedHtml); exit;
     }
 
-    public function generateFromHtml(SnappyPdf $pdf, $htmlContent, $fileName, array $options = array(), $overwrite = false, $urlReplace = true) {
+    public static function generateFromHtml(SnappyPdf $pdf, $htmlContent, $fileName, array $options = array(), $overwrite = false, $urlReplace = true) {
         $replacedHtml = $urlReplace ? self::getReplacedHtml($htmlContent) : $htmlContent;
         $pdf->generateFromHtml($replacedHtml, $fileName . '.pdf', $options, $overwrite);
     }
     
-    private function getReplacedHtml($htmlContent) {
+    private static function getReplacedHtml($htmlContent) {
         
         $site_url = defined('BASEPATH') ? BASEPATH . '/' : '';
         $local_url = defined('LOCAL_URL') ? LOCAL_URL : URL;
@@ -211,7 +207,7 @@ class Pdf {
         return $replacedHtml;
     }
     
-    private function headerFooterSizeReplace($htmlContent) {
+    private static function headerFooterSizeReplace($htmlContent) {
         $htmlContent = str_replace('12pt', '13pt', $htmlContent);
         $htmlContent = str_replace('11pt', '12pt', $htmlContent);
         $htmlContent = str_replace('10pt', '11pt', $htmlContent);
@@ -260,7 +256,7 @@ class Pdf {
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Common">
-    private function setCommonHeader() {
+    private static function setCommonHeader() {
         header('Content-Type: application/pdf');
         header('Pragma: no-cache');
         header('Expires: 0');

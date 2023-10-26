@@ -159,7 +159,7 @@ class Date
         return $interval->format('%m');
     }
     
-    public function addWorkingDays($format, $sign = '+', $startDate, $adddays) {
+    public static function addWorkingDays($format, $sign = '+', $startDate, $adddays) {
         $retdate = $startDate;
         if ($adddays < 0) {
             $adddays = $adddays * -1;
@@ -176,7 +176,7 @@ class Date
         return date($format, strtotime($retdate));
     }
     
-    public function getPrevDate($dateType) {
+    public static function getPrevDate($dateType) {
         
         if (!isset(Date::$prevDate[$dateType])) {
             
@@ -197,7 +197,7 @@ class Date
         }
     }
     
-    public function minutesToHumanReadable($inputMinutes) {
+    public static function minutesToHumanReadable($inputMinutes) {
         
         $inputSeconds = $inputMinutes * 60;
         $secondsInAMinute = 60;

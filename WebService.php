@@ -39,15 +39,15 @@ class WebService {
         return true;
     }
 
-    public function setErrorMessage($e) {
+    public static function setErrorMessage($e) {
         self::$getErrorMessage = $e;
     }
     
-    public function setUserKeyId($userKeyId) {
+    public static function setUserKeyId($userKeyId) {
         self::$userKeyId = $userKeyId;
     }
     
-    public function setClientUserInfo() {
+    public static function setClientUserInfo() {
         
         if (!self::$osName) {
             
@@ -61,7 +61,7 @@ class WebService {
         }
     }
 
-    public function soapCallAddr($serviceAddr, $shortWsdl, $operation, $param = null) {   
+    public static function soapCallAddr($serviceAddr, $shortWsdl, $operation, $param = null) {   
 
         try {    
             libxml_disable_entity_loader(false); 
@@ -95,7 +95,7 @@ class WebService {
         return self::wsObjectToArray($data, $rowname);
     }
 
-    public function caller($typeCode, $wsUrl, $methodName, $rowName = 'return', $params = null, $requestType = 'run', $isTest = false) {
+    public static function caller($typeCode, $wsUrl, $methodName, $rowName = 'return', $params = null, $requestType = 'run', $isTest = false) {
         
         $typeCode = strtolower($typeCode);
         
@@ -239,7 +239,7 @@ class WebService {
         }
     }
 
-    public function wsdlCall($serviceAddr, $methodName, $param = null) {
+    public static function wsdlCall($serviceAddr, $methodName, $param = null) {
         try {
             
             libxml_disable_entity_loader(false); 
@@ -272,7 +272,7 @@ class WebService {
         return str_replace(array(GF_SERVICE_ADDRESS, '?wsdl'), '', SERVICE_FULL_ADDRESS);
     }
     
-    public function getConfigServiceAddress($command) {
+    public static function getConfigServiceAddress($command) {
         
         $command = strtolower($command);
         $config = array();
@@ -393,7 +393,7 @@ class WebService {
                 
                 $newArr = json_decode($jsonStr, true);
                 
-                return $newArr['response'];
+                return isset($newArr['response']) ? $newArr['response'] : null;
                 
             } else {
                 if (count(get_object_vars($data)) === 0) {
@@ -456,7 +456,7 @@ class WebService {
         }
     }
     
-    public function runSerializeResponse($serviceAddr, $command, $param = array(), $shortWsdl = null, $rowName = 'return', $isTest = false) {
+    public static function runSerializeResponse($serviceAddr, $command, $param = array(), $shortWsdl = null, $rowName = 'return', $isTest = false) {
 
         $dataElement = self::serializeHeaderParam($command, $param, $isTest);
         
@@ -705,7 +705,7 @@ class WebService {
         }
     }
     
-    public function pushLangCriteria($command, $params) {
+    public static function pushLangCriteria($command, $params) {
         
         if ($command == 'PL_MDVIEW_004') {
             
@@ -737,7 +737,7 @@ class WebService {
         return Hash::encryption(Date::currentDate('Y-m-d H:i:s'));
     }
     
-    public function dataElementHeaderParam($command, $params, $isTest = false) {
+    public static function dataElementHeaderParam($command, $params, $isTest = false) {
         
         $sessionUpdated = 'true';
         
@@ -880,7 +880,7 @@ class WebService {
         return array('pJsonString' => json_encode($paramData, JSON_UNESCAPED_UNICODE));
     }
     
-    public function serializeHeaderParam($command, $params, $isTest = false) {     
+    public static function serializeHeaderParam($command, $params, $isTest = false) {     
         
         $sessionUpdated = 'true';
         

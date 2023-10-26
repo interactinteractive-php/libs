@@ -12,11 +12,7 @@
 
 class Mail {
 
-    public function __construct() {
-        parent::__construct();
-    }
-
-    public function sendPhpMailer($args) {
+    public static function sendPhpMailer($args) {
 
         set_time_limit(0);
         ini_set('memory_limit', '-1');

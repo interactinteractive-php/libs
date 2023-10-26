@@ -28,8 +28,7 @@ class Bootstrap {
     private static $middlewareUrls = array(
         'mdum', 'mdlayout', 
         'amactivity', 'mdrole',
-        'mdlayoutrender', 'mdworkspace',
-        'mdtheme', 'mdtaskflow',
+        'mdlayoutrender', 'mdworkspace', 'mdtaskflow',
         'mdworkflow', 'mdmetadata',
         'mdhelpdesk', 'mdfolder',
         'mdmetadata', 'mdwebservice',
@@ -132,7 +131,7 @@ class Bootstrap {
     private function _getUrl() {
         $url = isset($_GET['url']) ? $_GET['url'] : null;
         $url = rtrim($url, '/');
-        $url = filter_var($url, FILTER_SANITIZE_STRING);
+        $url = filter_var($url, FILTER_UNSAFE_RAW);
         $this->_url = explode('/', $url);
     }
 

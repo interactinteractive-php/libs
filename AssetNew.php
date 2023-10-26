@@ -3,7 +3,7 @@
 class AssetNew {
     
     /* Үүнийг ашиглахгүй, хэсэг хугацааны дараа устгана. jquery.easyui.min.js рүү нэгтгэсэн */
-    public function metaJs()
+    public static function metaJs()
     {
         return array(
             'assets/custom/addon/plugins/jquery-easyui/datagrid-cellediting.js',
@@ -11,7 +11,7 @@ class AssetNew {
         );
     }
     
-    public function metaOtherJs()
+    public static function metaOtherJs()
     {
         global $lang; 
         
@@ -22,7 +22,7 @@ class AssetNew {
         );
     }
     
-    public function metaCss()
+    public static function metaCss()
     {
         return array(
             'custom/css/fileexplorer.css',
@@ -31,7 +31,7 @@ class AssetNew {
         );
     }
     
-    public function highchartJs()
+    public static function highchartJs()
     {
         return array(
             'custom/addon/plugins/highstock/js/highstock.js',
@@ -39,7 +39,7 @@ class AssetNew {
         );
     }
     
-    public function amChartJs()
+    public static function amChartJs()
     {
         return array(
             'assets/custom/addon/plugins/amcharts4/core.js',
@@ -55,19 +55,19 @@ class AssetNew {
         );
     }
     
-    public function amChartCss()
+    public static function amChartCss()
     {
         return array('assets/custom/addon/plugins/amcharts/amcharts/plugins/export/export.css');
     }
     
-    public function authJs()
+    public static function authJs()
     {
         return array(
             'middleware/assets/js/addon/auth.js'
         );
     }
 
-    public function authMetaJs()
+    public static function authMetaJs()
     {
         return array(
             'middleware/assets/js/mdbp.js',
@@ -76,7 +76,7 @@ class AssetNew {
         );
     }
     
-    public function lifeCycleCss()
+    public static function lifeCycleCss()
     {
         return array(
             'custom/addon/plugins/jsplumb/css/style.css',
@@ -84,31 +84,31 @@ class AssetNew {
         );
     }
     
-    public function lifeCycleJs()
+    public static function lifeCycleJs()
     {
         return array('custom/addon/plugins/jsplumb/jsplumb.min.js');
     }
     
-    public function treeViewBootstrapCss()
+    public static function treeViewBootstrapCss()
     {
         return array(
             'custom/addon/plugins/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.css'
         );
     }
     
-    public function treeViewBootstrapJs()
+    public static function treeViewBootstrapJs()
     {
         return array(
             'custom/addon/plugins/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.js'
         );
     }
     
-    public function editorCss() 
+    public static function editorCss() 
     {
         return array('global/css/report_template.css');        
     }
     
-    public function calendarCss()
+    public static function calendarCss()
     {
         return array(
             'custom/addon/plugins/fullcalendar/fullcalendar.min.css',
@@ -116,7 +116,7 @@ class AssetNew {
         );
     }
     
-    public function calendarJs()
+    public static function calendarJs()
     {
         return array(
             'assets/custom/addon/plugins/fullcalendar/lib/moment.min.js',

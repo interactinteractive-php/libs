@@ -38,7 +38,7 @@ class Upload
      * 
      * @return
      */
-    function __construct()
+    public function __construct()
     {
         self::$FileName = 'imagename.jpg';
         self::$OverWrite = true;
@@ -54,7 +54,7 @@ class Upload
      * 
      * @return
      */
-    function UploadFile()
+    public static function UploadFile()
     {
         if (is_array(self::$File['name'])) {
             self::_ArrayUpload();
@@ -69,7 +69,7 @@ class Upload
      * 
      * @return
      */
-    function _ArrayUpload()
+    public static function _ArrayUpload()
     {
         for ($i = 0; $i < count(self::$File['name']); $i++) {
 
@@ -89,7 +89,7 @@ class Upload
      * 
      * @return
      */
-    function _NormalUpload()
+    public static function _NormalUpload()
     {  
         $_FileName = self::$File['name'];
         $_NewName = self::$NewName;
@@ -113,7 +113,7 @@ class Upload
      * @param mixed $NewName
      * @return
      */
-    function _UploadImage($FileName, $TmpName, $Size, $Type, $NewName)
+    public static function _UploadImage($FileName, $TmpName, $Size, $Type, $NewName)
     {   
         
         Image::$FileName = $FileName;
@@ -189,7 +189,7 @@ class Upload
      * @param mixed $NewName
      * @return
      */
-    function _ThumbUpload($FileName, $TmpName, $Size, $Type, $NewName)
+    public static function _ThumbUpload($FileName, $TmpName, $Size, $Type, $NewName)
     {
         list($width, $height) = getimagesize($TmpName);
 
@@ -217,7 +217,7 @@ class Upload
      * @param mixed $UpFile
      * @return
      */
-    function _CheckName($NewName, $UpFile)
+    public static function _CheckName($NewName, $UpFile)
     {
         if (empty($NewName)) {
             return self::_ChangeCase($UpFile);
@@ -237,7 +237,7 @@ class Upload
      * @param mixed $FileName
      * @return
      */
-    function _ChangeCase($FileName)
+    public static function _ChangeCase($FileName)
     {
         if (self::$NameCase == 'lower') {
             return strtolower($FileName);
@@ -255,7 +255,7 @@ class Upload
      * @param mixed $_FileName
      * @return
      */
-    function _FileExist($_NewName, $_FileName)
+    public static function _FileExist($_NewName, $_FileName)
     {
         if (self::$OverWrite == true) {
             if (file_exists(self::$SavePath . self::_CheckName($_NewName, $_FileName))) {
@@ -274,4 +274,5 @@ class Upload
             }
         }
     }
+    
 }

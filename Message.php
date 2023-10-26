@@ -18,10 +18,6 @@ class Message  {
     private static $msgAfter = '';
     public static $msgType = '';
 
-    public function __construct() {
-        parent::__construct();
-    }
-
     /**
      * Add a message to the queue
      * 
@@ -33,7 +29,7 @@ class Message  {
      * @return  bool 
      * 
      */
-    public function add($type, $message, $redirect_to) 
+    public static function add($type, $message, $redirect_to) 
     {       
         Session::init();
         
@@ -110,7 +106,7 @@ class Message  {
      * @return mixed              
      * 
      */
-    public function display($type = 'all', $print = false)
+    public static function display($type = 'all', $print = false)
     {
         if (!isset($_SESSION['flash_messages'])) return false;
 
@@ -177,7 +173,7 @@ class Message  {
      *               false = There are NOT any error messages
      * 
      */
-    public function hasErrors()
+    public static function hasErrors()
     { 
         return empty($_SESSION['flash_messages']['error']) ? false : true;	
     }
@@ -189,7 +185,7 @@ class Message  {
      * @return bool            	  
      * 
      */
-    public function hasMessages($type = null)
+    public static function hasMessages($type = null)
     {
         if (!is_null($type)) {
             if (!empty($_SESSION['flash_messages'][$type])) return $_SESSION['flash_messages'][$type];	
@@ -207,7 +203,7 @@ class Message  {
      * @param  string   $type     The type of messages to clear
      * @return bool 
      */
-    public function clear($type = 'all')
+    public static function clear($type = 'all')
     { 
         if ($type == 'all') {
             unset($_SESSION['flash_messages']); 

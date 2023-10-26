@@ -728,7 +728,7 @@ class Form {
         if (isset($params['data']) && is_array($params['data'])) {
             if ($params['data'] != null) {
                 foreach ($params['data'] as $k => $v) {
-                    if (isset($params['value']) && $params['value'] === $v[$params['op_value']]) {
+                    if (isset($params['value']) && $params['value'] == $v[$params['op_value']]) {
                         $o .= '<option value="' . $v[$params['op_value']] . '" selected="selected">' . $v[$params['op_text']] . '</option>';
                     } else {
                         $o .= '<option value="' . $v[$params['op_value']] . '">' . $v[$params['op_text']] . '</option>';

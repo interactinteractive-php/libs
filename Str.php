@@ -142,7 +142,7 @@ class Str {
     }
   
     public static function sanitize($string, $trim = false, $int = false, $str = false) {
-        $string = filter_var($string, FILTER_SANITIZE_STRING);
+        $string = filter_var($string, FILTER_UNSAFE_RAW);
         $string = trim($string);
         $string = stripslashes($string);
         $string = strip_tags($string);

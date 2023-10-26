@@ -1036,7 +1036,7 @@ class phpQueryObject implements Iterator, Countable, ArrayAccess {
 				if (! $param)
 					break;
 					// nth-child(n+b) to nth-child(1n+b)
-				if ($param{0} == 'n')
+				if ($param[0] == 'n')
 					$param = '1'.$param;
 				// :nth-child(index/even/odd/equation)
 				if ($param == 'even' || $param == 'odd')
@@ -1051,7 +1051,7 @@ class phpQueryObject implements Iterator, Countable, ArrayAccess {
 								return null;'),
 						new CallbackParam(), $param
 					);
-				else if (mb_strlen($param) > 1 && $param{1} == 'n')
+				else if (mb_strlen($param) > 1 && $param[1] == 'n')
 					// an+b
 					$mapped = $this->map(
 						create_function('$node, $param',

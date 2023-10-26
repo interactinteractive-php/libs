@@ -13,7 +13,7 @@
 class Security
 {
     
-    public function html($string)
+    public static function html($string)
     {
         return htmlentities($string, ENT_QUOTES, "UTF-8");
     }
@@ -26,7 +26,7 @@ class Security
             }
         } else {
             
-            $string = filter_var($string, FILTER_SANITIZE_STRING);
+            $string = filter_var($string, FILTER_UNSAFE_RAW);
             $string = trim($string);
             $string = stripslashes($string);
             $string = strip_tags($string);

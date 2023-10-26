@@ -120,7 +120,7 @@ class Arr {
     * @param   array   $array  The array to insert it into
     * @return  array
     */
-    public function arrayFiles(&$file_post) 
+    public static function arrayFiles(&$file_post) 
     {
         $file_ary = array();
         $file_count = count($file_post['name']);
@@ -314,7 +314,7 @@ class Arr {
         return $ret_str;
     }
     
-    public function group_by($arr, $key, $title) {
+    public static function group_by($arr, $key, $title) {
         $result = array();
         //$result2 = array();
         $n = 0;
@@ -445,7 +445,7 @@ class Arr {
     * Use: Arr::search( array $array, string "key1 = 'val1' and key2 >= 'val2' or key3 != 'val3'", int $all = 0 );
     */
     
-    public function search($SearchArray, $query, $all = 0, $Return = 'direct')
+    public static function search($SearchArray, $query, $all = 0, $Return = 'direct')
     {
         $SearchArray = json_decode(json_encode($SearchArray), true);
         $ResultArray = array();
@@ -536,7 +536,7 @@ class Arr {
         return false;
     } 
     
-    public function getRowMultiDimensionalFilter($arr, $searched) {
+    public static function getRowMultiDimensionalFilter($arr, $searched) {
         $arr = array_filter($arr, function($ar) use($searched) {
             //return ($ar['name'] == 'cat 1' AND $ar['id'] == '3');// you can add multiple conditions
         });
@@ -571,7 +571,7 @@ class Arr {
         return $array;
     } 
     
-    public function toZeroArray($arr)
+    public static function toZeroArray($arr)
     {
         if (!array_key_exists(0, $arr)) {
             $array = array(0 => $arr);
@@ -1326,7 +1326,7 @@ class Arr {
         return $result;
     }    
     
-    public function array_to_xml($data, &$xml_data) {
+    public static function array_to_xml($data, &$xml_data) {
         foreach ($data as $key => $value) {
             if (is_numeric($key)) {
                 $key = 'item' . $key; //dealing with <0/>..<n/> issues

@@ -29,7 +29,7 @@ class Image
      * @param mixed $FileName
      * @return
      */
-    function __construct($FileName)
+    public function __construct($FileName)
     {
         self::$FileName = $FileName;
     }
@@ -40,7 +40,7 @@ class Image
      * @param mixed $FileName
      * @return
      */
-    function ValidateExtension($FileName)
+    public static function ValidateExtension($FileName)
     {
         $extension = strtolower(substr($FileName, strrpos($FileName, '.') + 1));
         
@@ -56,7 +56,7 @@ class Image
      *
      * @return
      */
-    function ExistFile()
+    public static function ExistFile()
     {
         $fileexist = $_SERVER['DOCUMENT_ROOT'] . dirname($_SERVER['PHP_SELF']) . '/' . self::$PicDir . self::$FileName;
         if (file_exists($fileexist)) {
@@ -70,7 +70,7 @@ class Image
      * @param mixed $error
      * @return
      */
-    function GetError($error)
+    public static function GetError($error)
     {
         switch ($error) {
             case 0:
@@ -101,7 +101,7 @@ class Image
      *
      * @return
      */
-    function Resize($method)
+    public static function Resize($method)
     {
         if (empty(self::$TmpName)) {
             echo self::GetError(2);
@@ -241,7 +241,7 @@ class Image
      *
      * @return
      */
-    function Save()
+    public static function Save()
     {
         if (empty(self::$TmpName)) {
             echo self::GetError(2);

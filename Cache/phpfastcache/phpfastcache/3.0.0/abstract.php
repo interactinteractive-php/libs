@@ -58,9 +58,13 @@ abstract class BasePhpFastCache {
         if($object == null) {
             return null;
         }
-        return isset($option['all_keys']) && $option['all_keys'] ? $object : $object['value'];
+        
+        if (isset($option['all_keys']) && $option['all_keys']) {
+            return $object;
+        } else {
+            return $object['value'];
+        }
     }
-
 
     function getInfo($keyword, $option = array()) {
         $object = $this->driver_get($keyword,$option);

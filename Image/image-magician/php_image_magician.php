@@ -2438,8 +2438,9 @@ class imageLib
     {
 
     // *** Perform a check or two.
-    if (!is_resource($this->imageResized)) { if ($this->debug) { die('saveImage: This is not a resource.'); }else{ die(); }}      
-    $fileInfoArray = pathInfo($savePath);
+    if (is_resource($this->imageResized) || $this->imageResized instanceof \GdImage) {
+        
+        $fileInfoArray = pathInfo($savePath);
     clearstatcache();
     if (!is_writable($fileInfoArray['dirname'])) {  if ($this->debug) { die('The path is not writable. Please check your permissions.'); }else{ die(); }} 
     
@@ -2498,6 +2499,11 @@ class imageLib
     if ($error != '') {
       $this->errorArray[] = $error . ' support is NOT enabled. File not saved.';
     }       
+    
+    } else {
+        if ($this->debug) { die('saveImage: This is not a resource.'); }else{ die(); }
+    } 
+    
     }
 
 ## --------------------------------------------------------
@@ -2512,10 +2518,10 @@ class imageLib
     # Notes:
     #
   {
-
-    if (!is_resource($this->imageResized)) { if ($this->debug) { die('saveImage: This is not a resource.'); }else{ die(); }}  
-
-        switch($fileType)
+      
+      if (is_resource($this->imageResized) || $this->imageResized instanceof \GdImage) {
+        
+          switch($fileType)
         {
             case 'jpg':
             case 'jpeg':
@@ -2550,6 +2556,10 @@ class imageLib
     
 
     //imagedestroy($this->imageResized);
+        
+      } else {
+          if ($this->debug) { die('saveImage: This is not a resource.'); }else{ die(); }
+      }
   }
   
 ## --------------------------------------------------------
@@ -3040,10 +3050,11 @@ class imageLib
     # Notes:
     #
   {
-    if (!is_resource($img)) {
-      return false;
+    if (is_resource($this->imageResized) || $this->imageResized instanceof \GdImage) {
+        return @ImageColorsForIndex($img, @ImageColorAt($img, $x, $y));
+    } else {
+        return false;
     }
-    return @ImageColorsForIndex($img, @ImageColorAt($img, $x, $y));
   }
 
 ## --------------------------------------------------------
@@ -3229,7 +3240,7 @@ class imageLib
 ## --------------------------------------------------------
 
     public function __destruct() {
-    if (is_resource($this->imageResized)) {
+    if (is_resource($this->imageResized) || $this->imageResized instanceof \GdImage) {
       imagedestroy($this->imageResized);
     }
   } 
