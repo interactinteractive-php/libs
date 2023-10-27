@@ -28,11 +28,11 @@ class WebService {
     private static $ipAddress = null;
     private static $userAgent = null;
 
-    public function getErrorMessage() {
+    public static function getErrorMessage() {
         return self::$getErrorMessage;
     }
 
-    public function isException() {
+    public static function isException() {
         if (empty(self::$getErrorMessage)) {
             return false;
         }
