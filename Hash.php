@@ -25,10 +25,10 @@ class Hash
         if (defined('GF_SERVICE_ADDRESS') && GF_SERVICE_ADDRESS) {
             
             WebService::$isDefaultSessionId = true;
-            $data = WebService::runSerializeResponse(GF_SERVICE_ADDRESS, 'getPasswordHash', array('passwordHash' => $data));
+            $result = WebService::runSerializeResponse(GF_SERVICE_ADDRESS, 'getPasswordHash', array('passwordHash' => $data));
             
-            if (isset($data['status']) && $data['status'] == 'success' && isset($data['result']['result'])) {
-                return $data['result']['result'];
+            if (isset($result['status']) && $result['status'] == 'success' && isset($result['result']['result'])) {
+                return $result['result']['result'];
             }
         }
     

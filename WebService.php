@@ -297,7 +297,7 @@ class WebService {
         return $config;
     }
 
-    public function runResponse($serviceAddr, $command, $param = array(), $unitName = '', $shortWsdl = null, $rowname = 'return', $isTest = false) {
+    public static function runResponse($serviceAddr, $command, $param = array(), $unitName = '', $shortWsdl = null, $rowname = 'return', $isTest = false) {
         $dataElement = self::dataElementHeaderParam($command, $param, $isTest);
         
         if ($shortWsdl === null) {

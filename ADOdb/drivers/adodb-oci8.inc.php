@@ -934,7 +934,7 @@ END;
 	function UpdateBlob($table,$column,$val,$where,$blobtype='BLOB')
 	{
 
-		//if (strlen($val) < 4000) return $this->Execute("UPDATE $table SET $column=:blob WHERE $where",array('blob'=>$val)) != false;
+		if (mb_strlen($val) < 4000) return $this->Execute("UPDATE $table SET $column=:blob WHERE $where",array('blob'=>$val)) != false;
 
 		switch(strtoupper($blobtype)) {
 		default: ADOConnection::outp("<b>UpdateBlob</b>: Unknown blobtype=$blobtype"); return false;

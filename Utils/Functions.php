@@ -4,15 +4,15 @@ class Functions {
 
     private static $getDataViewCommand = 'PL_MDVIEW_004';
 
-    public function runDataView($systemMetaGroupId, $criteria = array(), $isShowQuery = 0, $paging = array()) {
+    public static function runDataView($systemMetaGroupId, $criteria = array(), $isShowQuery = 0, $paging = array()) {
         return self::runIt($systemMetaGroupId, $criteria, $isShowQuery, $paging);
     }
 
-    public function runDataViewWithoutLogin($systemMetaGroupId, $criteria = array(), $isShowQuery = 0, $paging = array()) {
+    public static function runDataViewWithoutLogin($systemMetaGroupId, $criteria = array(), $isShowQuery = 0, $paging = array()) {
         return self::runIt($systemMetaGroupId, $criteria, $isShowQuery, $paging, true);
     }
 
-    private function runIt($systemMetaGroupId, $criteria = array(), $isShowQuery = 0, $paging = array(), $isWithoutLogin = false) {
+    private static function runIt($systemMetaGroupId, $criteria = array(), $isShowQuery = 0, $paging = array(), $isWithoutLogin = false) {
         $param = array(
             'systemMetaGroupId' => $systemMetaGroupId,
             'showQuery' => $isShowQuery,
@@ -173,7 +173,7 @@ class Functions {
         return $paramFilter;
     }
 
-    public function runProcess($commandName, $param = array()) {
+    public static function runProcess($commandName, $param = array()) {
         $resultBusinessProcess = WebService::caller('WSDL-DE', SERVICE_FULL_ADDRESS, $commandName, 'return', $param, 'serialize');
         return $resultBusinessProcess;
     }
