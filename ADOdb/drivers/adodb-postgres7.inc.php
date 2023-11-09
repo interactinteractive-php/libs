@@ -119,10 +119,12 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 		$offset = (int) $offset;
 		$offsetStr = ($offset >= 0) ? " OFFSET ".((integer)$offset) : '';
 		$limitStr  = ($nrows >= 0)  ? " LIMIT ".((integer)$nrows) : '';
-		if ($secs2cache)
-			$rs = $this->CacheExecute($secs2cache,$sql."$limitStr$offsetStr",$inputarr);
-		else
-			$rs = $this->Execute($sql."$limitStr$offsetStr",$inputarr);
+		if ($secs2cache) {
+                    $rs = $this->CacheExecute($secs2cache,$sql."$limitStr$offsetStr",$inputarr);
+                } else {
+                    $rs = $this->Execute($sql."$limitStr$offsetStr",$inputarr);
+                    $rs->_array = $rs->GetArray();
+                }
 
 		return $rs;
 	}
