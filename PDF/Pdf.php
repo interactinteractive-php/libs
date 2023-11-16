@@ -160,8 +160,11 @@ class Pdf {
         require_once(BASEPATH . LIBS . 'PDF/knp-snappy/vendor/knplabs/knp-snappy/config/snappy_config.php');
 
         $pdf = new SnappyPdf();
+        
+        $envPath = getenv('WKHTMLTOPDF_PATH');
+        $path = $envPath ? $envPath : BASEPATH . LIBS . 'PDF/knp-snappy/vendor/bin/wkhtmltopdf';
 
-        $pdf->setBinary(BASEPATH . LIBS . 'PDF/knp-snappy/vendor/bin/wkhtmltopdf');
+        $pdf->setBinary($path);
 
         $pdf->setOptions($options);
         $pdf->setTimeout(600);
