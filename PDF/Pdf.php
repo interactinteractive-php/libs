@@ -25,9 +25,11 @@ class Pdf {
         require_once(BASEPATH . LIBS . 'PDF/knp-snappy/vendor/knplabs/knp-snappy/config/snappy_config.php');
 
         $pdf = new SnappyPdf();
-
-        //$pdf->setBinary(BASEPATH . LIBS . 'PDF/knp-snappy/vendor/bin/wkhtmltopdf');
-        $pdf->setBinary('wkhtmltopdf');
+        
+        $envPath = getenv('WKHTMLTOPDF_PATH');
+        $path = $envPath ? $envPath : BASEPATH . LIBS . 'PDF/knp-snappy/vendor/bin/wkhtmltopdf';
+        
+        $pdf->setBinary($path);
         
         $top    = (Input::isEmpty('top') == false) ? Input::post('top') : KNP_PDF_MARGIN_TOP;
         $left   = (Input::isEmpty('left') == false) ? Input::post('left') : KNP_PDF_MARGIN_LEFT;
