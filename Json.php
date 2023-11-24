@@ -22,7 +22,7 @@ class Json {
     
     public static function setHeaderEncode($array) {
         header('Content-Type: application/json');
-        echo self::escapeJsonString(json_encode($array));
+        echo self::escapeJsonString(json_encode($array, JSON_UNESCAPED_UNICODE));
     }
     
     public static function escapeJsonString($value) {   

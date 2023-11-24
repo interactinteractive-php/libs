@@ -83,7 +83,7 @@ class Pdf {
         if (Input::isEmpty('headerHtml') === false) {
             $options['no-footer-line'] = true;
             $options['header-spacing'] = 1;
-            $options['header-html'] = '<!DOCTYPE html><html><head><meta charset="UTF-8">'.$css.'</head><body>' . html_entity_decode(Input::post('headerHtml'), ENT_QUOTES, 'UTF-8') . '</body></html>';
+            $options['header-html'] = '<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>'.$css.'</head><body>' . html_entity_decode(Input::post('headerHtml'), ENT_QUOTES, 'UTF-8') . '</body></html>';
             $options['header-html'] = self::getReplacedHtml($options['header-html']);
             $options['header-html'] = self::headerFooterSizeReplace($options['header-html']);
         }

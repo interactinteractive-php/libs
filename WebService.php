@@ -755,9 +755,9 @@ class WebService {
         
         self::setClientUserInfo();
         
-        if ($command == 'PL_MDVIEW_004') {
+        /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
-        }
+        }*/
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
@@ -849,9 +849,9 @@ class WebService {
         
         self::setClientUserInfo();
         
-        if ($command == 'PL_MDVIEW_004') {
+        /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
-        }
+        }*/
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
@@ -920,9 +920,9 @@ class WebService {
             }
         }
         
-        if ($command == 'PL_MDVIEW_004') {
+        /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
-        }
+        }*/
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
@@ -957,9 +957,9 @@ class WebService {
         
         self::setClientUserInfo();
         
-        if ($command == 'PL_MDVIEW_004') {
+        /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
-        }
+        }*/
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
@@ -992,9 +992,9 @@ class WebService {
         
         self::setClientUserInfo();
         
-        if ($command == 'PL_MDVIEW_004') {
+        /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
-        }
+        }*/
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
@@ -1040,9 +1040,9 @@ class WebService {
         
         self::setClientUserInfo();
         
-        if ($command == 'PL_MDVIEW_004') {
+        /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
-        }
+        }*/
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);

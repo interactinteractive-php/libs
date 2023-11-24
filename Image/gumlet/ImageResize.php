@@ -734,7 +734,7 @@ class ImageResize
                 $max_x = imagesx($image) - 1;
                 $half_x = $max_x / 2;
                 $sy = imagesy($image);
-                $temp_image = imageistruecolor($image)? imagecreatetruecolor(1, $sy): imagecreate(1, $sy);
+                $temp_image = imageistruecolor($image) ? imagecreatetruecolor(1, $sy) : imagecreate(1, $sy);
                 for ($x = 0; $x < $half_x; ++$x) {
                     imagecopy($temp_image, $image, 0, 0, $x, 0, 1, $sy);
                     imagecopy($image, $image, $x, 0, $max_x - $x, 0, 1, $sy);

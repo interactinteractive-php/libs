@@ -32,7 +32,7 @@ class DBSql extends Controller {
         try {
             $db->Execute('DROP TABLE IF EXISTS '.$table.' CASCADE CONSTRAINTS');
             return true;
-        } catch (exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -68,6 +68,56 @@ class DBSql extends Controller {
     public static function drop_foreign_key($table, $fk_name){}
     
     public static function truncate_table($table){}
+    
+    public static function get_fields($db, $dbDriver, $objectName) {
+        
+        try {
+            
+            $getPrimaryColumn = null; 
+            $fields = array();
+            
+            if ($dbDriver == 'oci8') {
+                
+                $rs = $db->Execute("SELECT * FROM $objectName WHERE 1 = 0");
+                $fieldObjs = Arr::objectToArray($rs->_fieldobjs);
+
+                $getPrimaryColumn = $db->MetaPrimaryKeys($objectName);
+                
+                if (isset($getPrimaryColumn[0])) {
+                    $getPrimaryColumn = strtoupper($getPrimaryColumn[0]);
+                }
+                
+                foreach ($fieldObjs as $fieldObj) {
+                    $row = $fieldObj;
+                    unset($row['name']);
+                    $fields[$fieldObj['name']] = $row;
+                }
+
+            } elseif ($dbDriver == 'postgres9') {
+
+                $rs = $db->MetaColumns('public.' . $objectName);
+
+                if (is_array($rs)) {
+                    $fieldObjs = self::postgreArrayColumnsConvert($rs);
+                } else {
+                    $fieldObjs = self::postgreSqlColumnsConvert($rs->sql);
+                }
+
+                $keyRow = $db->GetRow(sprintf($db->metaKeySQL1, strtolower($objectName)));
+
+                if (isset($keyRow['COLUMN_NAME'])) {
+                    $getPrimaryColumn = strtoupper($keyRow['COLUMN_NAME']);
+                }
+            }
+            
+            $result = array('status' => 'success', 'primary' => ($getPrimaryColumn ? $getPrimaryColumn : null), 'fields' => $fields);
+        
+        } catch (Exception $ex) {
+            $result = array('status' => 'error', 'message' => $ex->getMessage());
+        }
+        
+        return $result;
+    }
     
     public static function dataViewQueryBindParams($request)
     {
