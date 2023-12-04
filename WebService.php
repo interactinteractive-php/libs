@@ -22,6 +22,7 @@ class WebService {
     public static $isCustomer = false;
     public static $isProcess = false;
     public static $userKeyId = null;
+    public static $isUseReport = false;
     public static $addonHeaderParam = array();
     private static $osName = null;
     private static $platformName = null;
@@ -679,7 +680,11 @@ class WebService {
                 return empty($value) ? Input::param($value) : Number::decimal(Input::param($value));
                 break;
             case 'time':
-                return empty($value) ? Input::param($value) : '1999-01-01 '.Input::param($value).':00';
+                if ($value != '') {
+                    return !isValidDate($value) ? '1999-01-01 '.Input::param($value).':00' : Input::param($value);
+                } else {
+                    return null;
+                }
                 break;
             case 'boolean':
                 return ($value != '') ? Input::param($value) : '0';
@@ -758,6 +763,10 @@ class WebService {
         /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
         }*/
+        
+        if (self::$isUseReport == true) {
+            $params['__isUseReport'] = 1;
+        }
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
@@ -853,6 +862,10 @@ class WebService {
             $params['__isUseReport'] = 1;
         }*/
         
+        if (self::$isUseReport == true) {
+            $params['__isUseReport'] = 1;
+        }
+        
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
         }
@@ -924,6 +937,10 @@ class WebService {
             $params['__isUseReport'] = 1;
         }*/
         
+        if (self::$isUseReport == true) {
+            $params['__isUseReport'] = 1;
+        }
+        
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
         }
@@ -961,6 +978,10 @@ class WebService {
             $params['__isUseReport'] = 1;
         }*/
         
+        if (self::$isUseReport == true) {
+            $params['__isUseReport'] = 1;
+        }
+        
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
         }
@@ -995,6 +1016,10 @@ class WebService {
         /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
         }*/
+        
+        if (self::$isUseReport == true) {
+            $params['__isUseReport'] = 1;
+        }
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
@@ -1043,6 +1068,10 @@ class WebService {
         /*if ($command == 'PL_MDVIEW_004') {
             $params['__isUseReport'] = 1;
         }*/
+        
+        if (self::$isUseReport == true) {
+            $params['__isUseReport'] = 1;
+        }
         
         if (Input::numeric('isNotUseReport') == 1) {
             unset($params['__isUseReport']);
