@@ -12,8 +12,8 @@
 class Config extends Controller {
     
     private static $cacheTime = 144000000;
-    private static $configArr = array();
-    private static $allConfigCodeArr = array();
+    public static $configArr = array();
+    public static $allConfigCodeArr = array();
 
     public function __construct() {
          parent::__construct();
@@ -26,8 +26,13 @@ class Config extends Controller {
         $where = null;
                 
         if ($code) {
+            $code = htmlspecialchars($code, ENT_QUOTES, 'UTF-8');
             $where .= " LOWER(CFG.CODE) = '".Str::lower($code)."'";
         }   
+        
+        if ($criteria) {
+            $criteria = htmlspecialchars($criteria, ENT_QUOTES, 'UTF-8');
+        }
         
         if ($likecriteria) {
             $where .= " AND (LOWER(VAL.CRITERIA) LIKE '%".Str::lower($criteria)."%' OR VAL.CRITERIA IS NULL)"; 

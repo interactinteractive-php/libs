@@ -1204,7 +1204,11 @@ class Arr {
     }
 
     public static function decode($string) {
-
+        
+        if (is_array($string)) {
+            return $string;
+        }
+        
         $string = base64_decode($string);
         $string = @gzinflate($string);
         $array = array();
