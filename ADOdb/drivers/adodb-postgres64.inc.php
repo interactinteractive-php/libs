@@ -301,10 +301,10 @@ class ADODB_postgres64 extends ADOConnection{
 	}
 
 	// Format date column in sql string given an input format that understands Y M D
-	function SQLDate($fmt, $col=false)
+	function SQLDate($fmt, $col=false, $functionName = 'TO_CHAR')
 	{
 		if (!$col) $col = $this->sysTimeStamp;
-		$s = 'TO_CHAR('.$col.",'";
+		$s = $functionName.'('.$col.",'";
 
 		$len = strlen($fmt);
 		for ($i=0; $i < $len; $i++) {
