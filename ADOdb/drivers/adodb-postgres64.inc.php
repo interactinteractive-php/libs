@@ -571,11 +571,11 @@ class ADODB_postgres64 extends ADOConnection{
 
 			if ($rsdef) {
 				while (!$rsdef->EOF) {
-                                        if (!isset($rsdef->fields['num'])) {
+                                        if (!isset($rsdef->fields['NUM'])) {
                                             return $rs;
                                         }
-					$num = $rsdef->fields['num'];
-					$s = $rsdef->fields['def'];
+					$num = $rsdef->fields['NUM'];
+					$s = $rsdef->fields['DEF'];
 					if (strpos($s,'::')===false && substr($s, 0, 1) == "'") { /* quoted strings hack... for now... fixme */
 						$s = substr($s, 1);
 						$s = substr($s, 0, strlen($s) - 1);
@@ -619,14 +619,15 @@ class ADODB_postgres64 extends ADOConnection{
 			if (is_array($keys)) {
 
 				foreach($keys as $key) {
+                                    
                                     if (!isset($key['COLUMN_NAME'])) {
                                         return $rs;
                                     }
                                     
-					if ($fld->name == $key['COLUMN_NAME'] AND $key['PRIMARY_KEY'] == 't')
-						$fld->primary_key = true;
-					if ($fld->name == $key['COLUMN_NAME'] AND $key['UNIQUE_KEY'] == 't')
-						$fld->unique = true; // What name is more compatible?
+                                    if ($fld->name == $key['COLUMN_NAME'] AND $key['PRIMARY_KEY'] == 't')
+                                            $fld->primary_key = true;
+                                    if ($fld->name == $key['COLUMN_NAME'] AND $key['UNIQUE_KEY'] == 't')
+                                            $fld->unique = true; // What name is more compatible?
 				}
 			}
 
