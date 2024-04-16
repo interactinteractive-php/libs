@@ -534,7 +534,7 @@ class ADODB_postgres64 extends ADOConnection{
 		$save = $ADODB_FETCH_MODE;
 		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 		if ($this->fetchMode !== false) $savem = $this->SetFetchMode(false);
-
+                
 		$rs = $this->Execute($this->_generateMetaColumnsSQL($table, $schema));
 		if (isset($savem)) $this->SetFetchMode($savem);
 		$ADODB_FETCH_MODE = $save;
@@ -561,6 +561,7 @@ class ADODB_postgres64 extends ADOConnection{
 		}
 
 		$rsdefa = array();
+                
 		if (!empty($this->metaDefaultsSQL)) {
 			$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 			$sql = sprintf($this->metaDefaultsSQL, ($table));
@@ -616,14 +617,15 @@ class ADODB_postgres64 extends ADOConnection{
 
 			// Freek
 			if (is_array($keys)) {
+
 				foreach($keys as $key) {
-                                    if (!isset($key['column_name'])) {
+                                    if (!isset($key['COLUMN_NAME'])) {
                                         return $rs;
                                     }
                                     
-					if ($fld->name == $key['column_name'] AND $key['primary_key'] == 't')
+					if ($fld->name == $key['COLUMN_NAME'] AND $key['PRIMARY_KEY'] == 't')
 						$fld->primary_key = true;
-					if ($fld->name == $key['column_name'] AND $key['unique_key'] == 't')
+					if ($fld->name == $key['COLUMN_NAME'] AND $key['UNIQUE_KEY'] == 't')
 						$fld->unique = true; // What name is more compatible?
 				}
 			}
@@ -634,6 +636,7 @@ class ADODB_postgres64 extends ADOConnection{
 			$rs->MoveNext();
 		}
 		$rs->Close();
+                
 		if (empty($retarr))
 			return  $false;
 		else
@@ -705,6 +708,7 @@ class ADODB_postgres64 extends ADOConnection{
 
 		// Get column names indexed by attnum so we can lookup the index key
 		$col_names = $this->MetaColumnNames($table,true,true);
+                
 		$indexes = array();
 		while ($row = $rs->FetchRow()) {
 			$columns = array();

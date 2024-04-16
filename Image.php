@@ -154,7 +154,8 @@ class Image
             
             switch ($ext) {
                 case 'jpg':
-                case 'jpeg':    
+                case 'jpeg':  
+                case 'jfif':    
                     $source = imagecreatefromjpeg(self::$TmpName);
                     break;
                 case 'gif':
@@ -168,7 +169,7 @@ class Image
                     break;
             }
             
-            if (($ext == 'jpeg' || $ext == 'jpg' || $ext == 'tiff') && !empty($exif['Orientation'])) {
+            if (($ext == 'jpeg' || $ext == 'jpg' || $ext == 'tiff' || $ext == 'jfif') && !empty($exif['Orientation'])) {
 
                 switch ($exif['Orientation']) {
                     case 8:
@@ -218,7 +219,8 @@ class Image
             
             switch ($ext) {
                 case 'jpg':
-                case 'jpeg':    
+                case 'jpeg':
+                case 'jfif':
                     imagejpeg($normal, self::$PicDir.'/'.self::$FileName, self::$ImageQuality);
                     break;
                 case 'gif':
