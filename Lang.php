@@ -370,30 +370,54 @@ class Lang extends Controller {
                 } elseif (DB_DRIVER == 'postgres9') {
 
                     $rs = $db->MetaColumns('public.' . $objectName);
-                    $result = $db->GetAll($rs->sql);
-        
-                    if ($result) {
-
-                        $checkFields = array();
-
-                        foreach ($result as $row) {
+                    $checkFields = [];
+                    
+                    if (is_array($rs)) {
+                        
+                        foreach ($rs as $row) {
 
                             $typeName = 'varchar';
 
-                            if ($row['TYPNAME'] == 'numeric') {
+                            if ($row->type == 'numeric') {
                                 $typeName = 'NUMBER';
-                            } elseif ($row['TYPNAME'] == 'text') {
+                            } elseif ($row->type == 'text' || $row->type == 'clob') {
                                 $typeName = 'CLOB';
-                            } elseif ($row['TYPNAME'] == 'timestamp') {
+                            } elseif ($row->type == 'timestamp') {
                                 $typeName = 'DATE'; 
                             }
 
-                            $checkFields[] = array(
-                                'name'       => strtoupper($row['ATTNAME']), 
+                            $checkFields[] = [
+                                'name'       => strtoupper($row->name), 
                                 'max_length' => 4000, 
                                 'type'       => $typeName, 
                                 'scale'      => 1
-                            );
+                            ];
+                        }
+        
+                    } else {
+                        $result = $db->GetAll($rs->sql);
+
+                        if ($result) {
+
+                            foreach ($result as $row) {
+
+                                $typeName = 'varchar';
+
+                                if ($row['TYPNAME'] == 'numeric') {
+                                    $typeName = 'NUMBER';
+                                } elseif ($row['TYPNAME'] == 'text') {
+                                    $typeName = 'CLOB';
+                                } elseif ($row['TYPNAME'] == 'timestamp') {
+                                    $typeName = 'DATE'; 
+                                }
+
+                                $checkFields[] = [
+                                    'name'       => strtoupper($row['ATTNAME']), 
+                                    'max_length' => 4000, 
+                                    'type'       => $typeName, 
+                                    'scale'      => 1
+                                ];
+                            }
                         }
                     }
                 }
