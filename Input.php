@@ -22,7 +22,7 @@ class Input {
     public static function get($index = null, $default = null)
     {
         if (self::getCheck($index)) {
-            return Security::sanitize($_GET[$index]); 
+            return ($_GET[$index] === '' || $_GET[$index] === null) ? null : Security::sanitize($_GET[$index]); 
         } else {
             return $default;
         }

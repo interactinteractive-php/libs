@@ -893,6 +893,55 @@ class WebService {
         return array('pJsonString' => json_encode($paramData, JSON_UNESCAPED_UNICODE));
     }
     
+    public function runJsonHeaderParam($command, $params, $isTest = false) { 
+        
+        $sessionUpdated = 'true';
+        
+        if (self::$isDefaultSessionId) {
+            $appUserSessionId = self::$defaultSessionId;
+        } else {
+            $appUserSessionId = Ue::appUserSessionId();
+            
+            if (!$appUserSessionId) {
+                $appUserSessionId = self::$defaultSessionId;
+            } else {
+                $sessionUpdated = 'false';
+            }
+        }
+        
+        self::setClientUserInfo();
+        
+        if (self::$isUseReport == true) {
+            $params['__isUseReport'] = 1;
+        }
+        
+        if (Input::numeric('isNotUseReport') == 1) {
+            unset($params['__isUseReport']);
+        }
+
+        $paramData = array(
+            'request' => array(
+                'unitName'       => Session::unitName(), 
+                'command'        => $command, 
+                'parameters'     => $params, 
+                'sessionId'      => $appUserSessionId, 
+                'sessionUpdated' => $sessionUpdated, 
+                'languageCode'   => Lang::getCode(),
+                'sessionToken'   => self::getToken(),
+                'isTest'         => $isTest, 
+                'isCustomer'     => self::$isCustomer, 
+                'userInfo'       => array(
+                    'ipAddress'    => self::$ipAddress, 
+                    'osName'       => self::$osName, 
+                    'platformName' => self::$platformName, 
+                    'userAgent'    => self::$userAgent
+                ) 
+            )
+        );
+
+        return json_encode($paramData, JSON_UNESCAPED_UNICODE);
+    }
+    
     public static function serializeHeaderParam($command, $params, $isTest = false) {     
         
         $sessionUpdated = 'true';
@@ -1231,6 +1280,8 @@ class WebService {
         curl_setopt($curl_handle, CURLOPT_POST, true);
         curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $lastParams);
         curl_setopt($curl_handle, CURLOPT_HEADER, false);
+        curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl_handle, CURLOPT_HTTPHEADER, array(                                                                          
             'Content-Type: application/xml'                                                                                                                                                    
         ));      
@@ -1247,6 +1298,50 @@ class WebService {
         }
     }
     
+    public function runRestJson($url, $methodName, $params) {
+        $lastParams = self::runJsonHeaderParam($methodName, $params);
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $lastParams);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);      
+
+        $buffer = curl_exec($ch);
+        
+        if (curl_errno($ch)) {
+                
+            $msg = curl_error($ch);
+            curl_close($ch);
+
+            return ['status' => 'error', 'text' => $msg];
+        }
+            
+        curl_close($ch);
+        
+        $result = json_decode($buffer, true);
+        
+        if ($result) {
+            
+            if (isset($result['response'])) {
+                return $result['response'];
+            } else {
+                self::setErrorMessage(self::$soapErrorNonNormal);
+                return ['status' => 'error', 'text' => self::getErrorMessage()];
+            }
+            
+        } else {
+            $jsonErrorMsg = json_last_error_msg();
+            
+            self::setErrorMessage($jsonErrorMsg);
+            return ['status' => 'error', 'text' => self::getErrorMessage()];
+        }
+    }
+    
     public function requestPost($url, $params = array()) {
         
         $curl_handle = curl_init();
@@ -1256,6 +1351,8 @@ class WebService {
         curl_setopt($curl_handle, CURLOPT_POST, true);
         curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $params);
         curl_setopt($curl_handle, CURLOPT_HEADER, false);
+        curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl_handle, CURLOPT_HTTPHEADER, array(           
             'User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', 
             'Content-Type: application/xml'                                                                                                                                                    
