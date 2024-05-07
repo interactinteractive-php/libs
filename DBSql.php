@@ -119,7 +119,7 @@ class DBSql extends Controller {
         return $result;
     }
     
-    public function postgreArrayColumnsConvert($data) {
+    public static function postgreArrayColumnsConvert($data) {
 
         $arr = [];
             
@@ -146,7 +146,7 @@ class DBSql extends Controller {
         return $arr;
     }
     
-    public function postgreSqlColumnsConvert($db, $sql) {
+    public static function postgreSqlColumnsConvert($db, $sql) {
 
         $data = $db->GetAll($sql);
         
