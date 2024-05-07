@@ -100,7 +100,7 @@ class DBSql extends Controller {
                 if (is_array($rs)) {
                     $fieldObjs = self::postgreArrayColumnsConvert($rs);
                 } else {
-                    $fieldObjs = self::postgreSqlColumnsConvert($rs->sql);
+                    $fieldObjs = self::postgreSqlColumnsConvert($db, $rs->sql);
                 }
 
                 $keyRow = $db->GetRow(sprintf($db->metaKeySQL1, strtolower($objectName)));
@@ -117,6 +117,67 @@ class DBSql extends Controller {
         }
         
         return $result;
+    }
+    
+    public function postgreArrayColumnsConvert($data) {
+
+        $arr = [];
+            
+        foreach ($data as $row) {
+
+            $typeName = 'varchar';
+
+            if ($row->type == 'numeric') {
+                $typeName = 'NUMBER';
+            } elseif ($row->type == 'text' || $row->type == 'clob') {
+                $typeName = 'CLOB';
+            } elseif ($row->type == 'timestamp') {
+                $typeName = 'DATE'; 
+            }
+
+            $arr[] = array(
+                'name'       => strtoupper($row->name), 
+                'max_length' => 4000, 
+                'type'       => $typeName, 
+                'scale'      => 1
+            );
+        }
+
+        return $arr;
+    }
+    
+    public function postgreSqlColumnsConvert($db, $sql) {
+
+        $data = $db->GetAll($sql);
+        
+        if ($data) {
+            
+            $arr = array();
+            
+            foreach ($data as $row) {
+                
+                $typeName = 'varchar';
+                
+                if ($row['TYPNAME'] == 'numeric') {
+                    $typeName = 'NUMBER';
+                } elseif ($row['TYPNAME'] == 'text' || $row['TYPNAME'] == 'clob') {
+                    $typeName = 'CLOB';
+                } elseif ($row['TYPNAME'] == 'timestamp') {
+                    $typeName = 'DATE'; 
+                }
+                
+                $arr[] = array(
+                    'name'       => strtoupper($row['ATTNAME']), 
+                    'max_length' => 4000, 
+                    'type'       => $typeName, 
+                    'scale'      => 1
+                );
+            }
+            
+            return $arr;
+        }
+        
+        return null;
     }
     
     public static function dataViewQueryBindParams($request)
