@@ -74,7 +74,7 @@ class DBSql extends Controller {
         try {
             
             $getPrimaryColumn = null; 
-            $fields = array();
+            $fields = [];
             
             if ($dbDriver == 'oci8') {
                 
@@ -102,6 +102,12 @@ class DBSql extends Controller {
                 } else {
                     $fieldObjs = self::postgreSqlColumnsConvert($db, $rs->sql);
                 }
+                
+                foreach ($fieldObjs as $fieldObj) {
+                    $row = $fieldObj;
+                    unset($row['name']);
+                    $fields[$fieldObj['name']] = $row;
+                }
 
                 $keyRow = $db->GetRow(sprintf($db->metaKeySQL1, strtolower($objectName)));
 
@@ -110,10 +116,10 @@ class DBSql extends Controller {
                 }
             }
             
-            $result = array('status' => 'success', 'primary' => ($getPrimaryColumn ? $getPrimaryColumn : null), 'fields' => $fields);
+            $result = ['status' => 'success', 'primary' => ($getPrimaryColumn ? $getPrimaryColumn : null), 'fields' => $fields];
         
         } catch (Exception $ex) {
-            $result = array('status' => 'error', 'message' => $ex->getMessage());
+            $result = ['status' => 'error', 'message' => $ex->getMessage()];
         }
         
         return $result;
