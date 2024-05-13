@@ -102,6 +102,7 @@ class Hash
     public static function decryption($data) {
         
         $key = 'PjEc~Q^D;4:*5v&D';
+        $data = str_replace(' ', '+', $data);
         $parts = explode(':', $data);
         
         if (isset($parts[1])) {
