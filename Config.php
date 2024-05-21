@@ -35,9 +35,9 @@ class Config extends Controller {
         }
         
         if ($likecriteria) {
-            $where .= " AND (LOWER(VAL.CRITERIA) LIKE '%".Str::lower($criteria)."%' OR VAL.CRITERIA IS NULL)"; 
+            $where .= " AND (LOWER(VAL.CRITERIA) LIKE '%".Str::lower($criteria)."%' OR VAL.CRITERIA IS NULL OR VAL.CRITERIA = '')"; 
         } elseif ($criteria) {
-            $where .= " AND (LOWER(VAL.CRITERIA) = '".Str::lower($criteria)."' OR VAL.CRITERIA IS NULL)"; 
+            $where .= " AND (LOWER(VAL.CRITERIA) = '".Str::lower($criteria)."' OR VAL.CRITERIA IS NULL OR VAL.CRITERIA = '')"; 
         }
         
         if ($where) {
@@ -74,6 +74,7 @@ class Config extends Controller {
     public static function getFromCache($code = null, $criteria = null) {     
         
         $lowerCode = strtolower($code);
+        
         $confData = Config::setCache();     
 
         if (isset($confData[$lowerCode])) {
