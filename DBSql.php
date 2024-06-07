@@ -272,7 +272,7 @@ class DBSql extends Controller {
         if (isset($matches[0][0])) {
             
             $matches = $matches[0];
-            $arr = array();
+            $arr = [];
             
             usort($matches, function($a, $b) {
                 return strlen($a) < strlen($b);
@@ -289,7 +289,7 @@ class DBSql extends Controller {
             return $arr;
         }
         
-        return array();
+        return [];
     }
 
 }
