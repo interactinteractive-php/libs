@@ -1369,7 +1369,7 @@ class WebService {
         return $buffer;
     }
     
-    public function curlRequest($url, $params = array(), $isResponseJson = false) {
+    public function curlRequest($url, $params = [], $isResponseJson = false) {
         
         try {
 
@@ -1384,11 +1384,11 @@ class WebService {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); 
             curl_setopt($ch, CURLOPT_TIMEOUT, 300);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 'User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36', 
                 'Accept: application/json', 
                 'Content-Type: application/json;charset=UTF-8'
-            ));
+            ]);
 
             $response = curl_exec($ch);
             
@@ -1397,7 +1397,7 @@ class WebService {
                 $msg = curl_error($ch);
                 curl_close($ch);
                 
-                return array('status' => 'error', 'message' => $msg);
+                return ['status' => 'error', 'message' => $msg];
             }
 
             curl_close($ch); 
@@ -1409,8 +1409,7 @@ class WebService {
             }
             
         } catch (Exception $ex) {
-            
-            $response = array('status' => 'error', 'message' => $ex->getMessage());
+            $response = ['status' => 'error', 'message' => $ex->getMessage()];
         }
         
         return $response;

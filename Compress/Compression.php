@@ -51,7 +51,7 @@ class Compression extends Controller {
         $compressed = base64_decode($data);
         $compressed = @gzinflate(substr($compressed, 10, -8));
   
-        if ($compressed === false || $compressed == '' || $compressed == '6' || strpos($compressed, '') !== false || strpos($compressed, 'aQ') !== false || strpos($compressed, 'aR') !== false || strpos($compressed, 'Q') !== false || !mb_check_encoding($compressed, 'UTF-8')) {
+        if ($compressed === false || $compressed == '' || $compressed == '6' || $compressed == '	' || strpos($compressed, '') !== false || strpos($compressed, 'aQ') !== false || strpos($compressed, 'aR') !== false || strpos($compressed, 'Q') !== false || !mb_check_encoding($compressed, 'UTF-8')) {
             return $data;
         }
         
