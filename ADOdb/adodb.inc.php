@@ -915,9 +915,9 @@ if (!defined('_ADODB_LAYER')) {
 	 *
 	 * @return bool
 	 */
-	function Connect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "", $forceNew = false) {
+	function Connect($argHostname = "", $argUsername = "", $argPassword = "", $argDatabaseName = "", $forceNew = false, $isMain = false) {
             
-                if (defined('SESSION_PREFIX') && SESSION_PREFIX && class_exists('Session') && $secondDb = Session::get(SESSION_PREFIX . 'sdb')) {
+                if (defined('SESSION_PREFIX') && SESSION_PREFIX && class_exists('Session') && $isMain == false && $secondDb = Session::get(SESSION_PREFIX . 'sdb')) {
 
                     $secondDb = Crypt::decrypt($secondDb, 'db49x');
                     $secondDbArr = explode('|$|', $secondDb);
