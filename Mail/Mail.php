@@ -99,6 +99,8 @@ class Mail {
         } else {
             $response = array('status' => 'error', 'message' => $mail->ErrorInfo);
         }
+        
+        $mail->clearAllRecipients();
 
         return $response;
     }
