@@ -324,21 +324,24 @@ class Lang extends Controller {
             
             $langCount = Session::get(SESSION_PREFIX . 'langCount');
             $cacheName = 'getActiveLanguageList';
-            $selectQry = "SELECT 
-                        LANGUAGE_CODE, 
-                        LANGUAGE_NAME, 
-                        LOWER(SHORT_CODE) AS SHORT_CODE
-                    FROM REF_LANGUAGE 
-                    WHERE IS_ACTIVE = 1 
-                    ORDER BY DISPLAY_ORDER ASC";
+            $selectQry = "
+                SELECT 
+                    LANGUAGE_CODE, 
+                    LANGUAGE_NAME, 
+                    LOWER(SHORT_CODE) AS SHORT_CODE 
+                FROM REF_LANGUAGE 
+                WHERE IS_ACTIVE = 1 
+                ORDER BY DISPLAY_ORDER ASC";
             
             if ($langCount) {
+                
                 if ($langCount == '1') {
                     return self::$langList;
                 } else {
                     $departmentId = Session::get(SESSION_PREFIX . 'userKeyDepartmentId');
                     $cacheName = 'getActiveLanguageList_' . $departmentId;
-                    $selectQry = "SELECT 
+                    $selectQry = "
+                    SELECT 
                         T0.LANGUAGE_CODE, 
                         T0.LANGUAGE_NAME, 
                         LOWER(T0.SHORT_CODE) AS SHORT_CODE
@@ -359,7 +362,7 @@ class Lang extends Controller {
 
                 $data = $db->GetAll($selectQry);
                 
-                $arr = array();
+                $arr = [];
                 $objectName = 'GLOBE_DICTIONARY';
 
                 if (DB_DRIVER == 'oci8') {

@@ -1310,8 +1310,12 @@ class Arr {
         foreach ($keys as $key) {
             $arr = &$arr[$key];
         }
-
-        $arr = $value;
+        
+        if (is_array($value)) {
+            $arr = array_merge($arr, $value);
+        } else {
+            $arr = $value;
+        }
     }
     
     public static function groupByArrayLower($rows, $key) {
